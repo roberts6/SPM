@@ -1,14 +1,17 @@
 export const FetchData = async (setJugadores) => {
     try {
-        const response = await fetch(`https://192.168.86.28:8081/jugadores/full`);
+        const response = await fetch('http://localhost:8083/jugadores/full'); 
+        console.log('Response:', response);
         if (!response.ok) {
-            throw new Error('Hubo un problema al obtener los datos');
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
         const data = await response.json();
-        
+        console.log('datos del fetch con todos los jugadores:', data);
         setJugadores(data);
     } catch (error) {
-        console.error(error);
+        console.error('FetchData Error:', error);
     }
 };
+
+
 

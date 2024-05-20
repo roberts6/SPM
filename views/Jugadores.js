@@ -1,36 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { FetchData } from '../components/fetch.js';
+import FiltroNombre from '../filtros/filtroNombre.js';
+import FiltroHabilitado from '../filtros/filtroHabilitado.js';
+import { useNavigation } from '@react-navigation/native';
 
 const Jugadores = () => {
     const [jugadores, setJugadores] = useState([]);
+    const [filteredNombre, setFilteredNombre] = useState([]);
+    const [habilitadoFilter, setHabilitadoFilter] = useState(null);
+    const [search, setSearch] = useState('');
+    const [error, setError] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchDataFromServer = async () => {
-            FetchData(setJugadores);
+            try {
+                await FetchData(setJugadores);
+            } catch (err) {
+                setError(err.message);
+            }
         };
-
         fetchDataFromServer();
     }, []);
 
+    useEffect(() => {
+        let filteredData = jugadores.filter(jugador =>
+            (jugador.nombre.toLowerCase().includes(search.toLowerCase()) ||
+            jugador.apellido.toLowerCase().includes(search.toLowerCase()) ||
+            jugador.club.toLowerCase().includes(search.toLowerCase()))
+        );
+
+        if (habilitadoFilter !== null) {
+            filteredData = filteredData.filter(jugador =>
+                (habilitadoFilter === 0 && jugador.habilitado === 0) || jugador.habilitado === habilitadoFilter
+            );
+        }
+
+        setFilteredNombre(filteredData);
+    }, [search, jugadores, habilitadoFilter]);    
+
+    const handlePlayerPress = (item) => {
+        navigation.navigate('DetalleJugador', { jugador: item });
+    }
+
     return (
         <View>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>Lista de Jugadores</Text>
+             <FiltroNombre search={search} setSearch={setSearch} />
+            <FiltroHabilitado setHabilitadoFilter={setHabilitadoFilter} />
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>
+                Lista de Jugadores
+            </Text>
+            {error ? (
+                <Text style={{ color: 'red', textAlign: 'center' }}>Error: {error}</Text>
+            ) : (
             <FlatList
-                data={jugadores}
-                keyExtractor={(item) => item.id.toString()}
+                data={filteredNombre}
+                keyExtractor={(item) => item.id_jugador.toString()}
                 renderItem={({ item }) => (
-                    <View style={{ borderBottomWidth: 1, borderBottomColor: 'gray', padding: 10 }}>
-                        <Text>Club: {item.club}</Text>
-                        <Text style={{ fontSize: 16, color: 'black' }}>{item.nombre} - {item.apellido}</Text>
-                        <Text>Edad: {item.edad}</Text>
-                        <Text>Género: {item.genero}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => handlePlayerPress(item)}>
+                        <View style={{ borderBottomWidth: 1, borderBottomColor: 'gray', padding: 10 }}>
+                            <Text style={{ fontWeight: 'bold' }}>Club: {item.club}</Text>
+                            <Text style={{ fontSize: 16, color: 'black' }}>{item.nombre} - {item.apellido}</Text>
+                            <Text>Edad: {item.edad}</Text>
+                            <Text>Género: {item.genero}</Text>
+                            <Text>Habilitado: {item.habilitado === 1 ? "Sí" : "No"}</Text>
+                        </View>
+                    </TouchableOpacity>
                 )}
             />
+            )}
         </View>
     );
 };
 
 export default Jugadores;
-
