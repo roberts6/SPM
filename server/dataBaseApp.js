@@ -18,18 +18,19 @@ import cors from 'cors';
 
 // para que la API sea privada se crea esta constante
 const corsOptions = {
-    origin: "exp://192.168.86.29:8081", // especifica el origen de la request. En este caso solo va a estar disponible para el uso desde mi localhost
+    origin: "http://192.168.86.29:8081", // especifica el origen de la request. En este caso solo va a estar disponible para el uso desde mi localhost
     methods: ["POST", "GET", "PUT", "DELETE"], // métodos autorizados
     credentials: true // si acepta enviar cookies o autenticaciones
 }
 const app = express();
 app.use(express.json()); // solo escucha request cuya respuesta es un json
 app.use(express.urlencoded({ extended: true }));
-app.use(cors()); //si no se especifica nada (app.use(cors());) se deja la API abierta para cualquier persona
+app.use(cors(corsOptions)); //si no se especifica nada (app.use(cors());) se deja la API abierta para cualquier persona
 const PORT = 8083
 
 //trae a todos los jugadores de la base de datos
 app.get('/jugadores/full', async (req, res) => {
+    console.log('Solicitud recibida para /jugadores/full ');
     try {
         const jugadores = await getJugadoresFull();
         res.json(jugadores);
@@ -38,6 +39,7 @@ app.get('/jugadores/full', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener todos los jugadores' });
     }
 });
+
 
 // busca un jugador por su id
 app.get("/jugador/id/:id", async (req, res) => {
