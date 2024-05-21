@@ -64,7 +64,7 @@ const Jugadores = () => {
                             <Text style={{ fontSize: 16, color: 'black' }}>{item.nombre} - {item.apellido}</Text>
                             <Text>Edad: {item.edad}</Text>
                             <Text>Género: {item.genero}</Text>
-                            <Text>Habilitado: {item.habilitado === 1 ? "Sí" : "No"}</Text>
+                            <Text>Habilitado: <Text style={{ fontWeight: 'bold' }}>{item.habilitado === 1 ? "Sí" : "No"}</Text></Text>
                         </View>
                     </TouchableOpacity>
                 )}
