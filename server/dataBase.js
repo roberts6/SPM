@@ -36,6 +36,15 @@ export async function getJugadorByClub(club) {
         return jugadorClub
 }
 
+export async function getClub(club) {
+    const [busquedaClub] = await pool.query(
+        `SELECT DISTINCT club
+        FROM jugadores
+        WHERE club LIKE ?;`, [`%${club}%`] // se pasa la variable de esta manera para que no se pueda obtener información por fuera
+    );
+    return busquedaClub;
+}
+
 export async function getJugadoresByClubHabilitado(club) {
     const [jugadorClub] = await pool.query(
         `SELECT DISTINCT *
@@ -166,8 +175,8 @@ export async function actualizarJugador(id_jugador, nombre, apellido, edad, gene
             prestador_servicio_emergencia, habilitado, id_jugador
         ];
         
-        console.log("Consulta SQL: ", query);
-        console.log("Valores: ", values);
+        // console.log("Consulta SQL: ", query);
+        // console.log("Valores: ", values);
         
         const [jugadorActualizado] = await pool.query(query, values);
 

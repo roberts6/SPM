@@ -2,6 +2,7 @@ import express from 'express'
 import {getJugadorByClub,
     getJugadoresFull, 
     getJugador,
+    getClub,
     getJugadoresByClubHabilitado,
     getJugadorById,
     getJugadorByEmail,
@@ -96,6 +97,21 @@ app.get("/jugadores/club/:club", async (req, res) => {
       res.status(500).send({ message: "Error al recuperar jugadores del club: " + club });
     }
   });
+
+
+// busca clubes
+app.get("/jugadores/club/:club", async (req, res) => {
+    // Reemplaza guiones con espacios para coincidir con los valores de la base de datos
+    const club = req.params.club.replace(/-/g, ' ').toLowerCase();
+
+    try {
+        const result = await getClub(club);
+        res.send(result);
+    } catch (error) {
+        res.status(500).send({ message: "Error al recuperar datos del club: " + club });
+    }
+});
+
 
   // busca jugadores habiilitados por club
   app.get("/jugadores/habilitados/:club", async (req, res) => {
