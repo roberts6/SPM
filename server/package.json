@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@react-native-community/datetimepicker": "^8.1.0",
+    "@react-native-firebase/app": "^20.1.0",
+    "@react-native-firebase/firestore": "^20.1.0",
     "cors": "^2.8.5",
     "firebase": "^10.12.2",
     "mysql2": "^3.9.7"
