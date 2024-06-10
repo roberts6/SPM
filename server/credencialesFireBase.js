@@ -1,29 +1,34 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getFirestore } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBQxTBII1gUIuAWpmL7dzJE9Z_iS-X2lwE",
-  authDomain: "spmdb-40088.firebaseapp.com",
-  projectId: "spmdb-40088",
-  storageBucket: "spmdb-40088.appspot.com",
-  messagingSenderId: "81759493355",
-  appId: "1:81759493355:web:ff436b56dbd8e3a6d5f2ae",
-  measurementId: "G-JCKDGGDFGL"
+  apiKey: "AIzaSyAL-jrh6__iYGxqLrHucbZ_79dW8YhlTWc",
+  authDomain: "spmfirebase-c792e.firebaseapp.com",
+  databaseURL: "https://spmfirebase-c792e-default-rtdb.firebaseio.com",
+  projectId: "spmfirebase-c792e",
+  storageBucket: "spmfirebase-c792e.appspot.com",
+  messagingSenderId: "864076740253",
+  appId: "1:864076740253:web:3b3b153e27b749cd570674",
+  measurementId: "G-7X06NLGHVK"
 };
 
+// Initialize Firebase
 const appFirebase = initializeApp(firebaseConfig);
-const analytics = getAnalytics(appFirebase);
-const db = firebase.firestore()
+const db = getFirestore(appFirebase);
+
+
 
 // Initialize Firebase
-export default {
-appFirebase,
-analytics,
-db
-}
+// export default {
+// appFirebase,
+// analytics,
+// db
+// }
+export { db };
 
