@@ -16,7 +16,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Agregar Jugador" component={CrearJugador} />
         <Stack.Screen name="Jugadores" component={Jugadores} />
-        <Stack.Screen name="DetalleJugador" component={DetalleJugador} />
+        <Stack.Screen name="Información Jugador" component={DetalleJugador} />
       </Stack.Navigator>
     </NavigationContainer>
   );
