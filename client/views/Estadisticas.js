@@ -322,39 +322,44 @@ function Estadisticas({ jugador }) {
     const handleSuma = (key) => {
         setAccion((prevState) => {
             if (prevState.roja === 1 && key !== 'roja') {
-                return prevState; // No permitir cambios en otras acciones si 'roja' es igual a 1
+                return prevState; // No permitir cambios en acciones distintas de 'roja' si 'roja' es igual a 1
             }
-            
+    
             if (key === 'dosMinutos' && prevState[key] >= 3) {
                 return prevState;
             }
-            
+    
             // No permitir que 'roja' exceda 1
             if (key === 'roja' && prevState[key] === 1) {
                 return prevState;
             }
-
+    
             // No permitir que 'amarilla' exceda 1
             if (key === 'amarilla' && prevState[key] === 1) {
                 return prevState;
             }
-
+    
+            // No permitir que 'amarilla' se incremente si 'dosMinutos' > 0 y 'amarilla' es 0
+            if (key === 'amarilla' && prevState.dosMinutos > 0 && prevState.amarilla === 0) {
+                return prevState;
+            }
+    
             let nuevosValores = { ...prevState, [key]: prevState[key] + 1 };
-
+    
             // Actualiza pases y perdidas si la acción es paseErrado
             if (key === 'paseErrado') {
                 nuevosValores.pases = prevState.pases + 1;
                 nuevosValores.perdidas = prevState.perdidas + 1;
             }
-
+    
             // Verifica si se alcanza el límite de dos minutos y actualiza a roja al llegar a 3
             if (key === 'dosMinutos' && nuevosValores.dosMinutos === 3) {
                 nuevosValores.roja = 1;
             }
-
+    
             return nuevosValores;
         });
-    };
+    };    
     
     const handleResta = (key) => {
         setAccion((prevState) => {
