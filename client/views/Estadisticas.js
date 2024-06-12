@@ -95,7 +95,8 @@ function Estadisticas({ jugador }) {
                 nuevosValores.pases = prevState.pases > 0 ? prevState.pases - 1 : 0; 
                 nuevosValores.perdidas = prevState.perdidas > 0 ? prevState.perdidas - 1 : 0;
             }
-
+              
+            // si 
             if (key === 'dosMinutos' && prevState[key] >= 3) {
                     nuevosValores.roja = prevState.pases > 0 ? prevState.pases - 1 : 0;
                 }
