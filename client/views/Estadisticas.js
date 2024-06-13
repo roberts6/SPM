@@ -357,15 +357,16 @@ function Estadisticas({ jugador }) {
         const pases = accion.paseErrado + accion.pases
         setPasesTotales(pases)
         
-        setPorcentajeLanzamientos(totalLanzamientos > 0 ? ((accion.Nueve + accion.Seis) / totalLanzamientos * 100).toFixed(2) : 0); 
+        setPorcentajeLanzamientos(totalLanzamientos > 0 ? Math.floor((accion.Nueve + accion.Seis) / totalLanzamientos * 100) : 0); 
 
         const penalesLanzados = accion.penal + accion.penalAfuera + accion.penalArquero;
         setPorcentajePenal(penalesLanzados > 0 
-            ? ((accion.penal / penalesLanzados) * 100).toFixed(2) : 0);
+            ? Math.floor((accion.penal / penalesLanzados) * 100)
+            : 0);
 
             const pasesTotales = accion.paseErrado + accion.pases;
     setPorcentajePases(pasesTotales > 0
-        ? ((accion.pases / pasesTotales) * 100).toFixed(2)
+        ? Math.floor((accion.pases / pasesTotales) * 100)
         : 0);
     }, [accion]);
 
