@@ -23,11 +23,10 @@ const DetalleJugador = ({ route }) => { // es el objeto que envía handlePlayerP
             <Text style={styles.text}>Teléfono: {jugador.telefono}</Text>
             <Text style={styles.text}>Dirección: {jugador.direccion}</Text>
             <Text style={styles.text}>Obra Social: {jugador.prestador_servicio_emergencia}</Text>
-            <View style={styles.botonContainer}>
+            <View style={[jugador.habilitado === 0 ? { display: 'none' } : styles.botonContainer]}>
                 <Button
                     title='Agregar 📈'
                     color='white'
-                    style={styles.boton}
                     onPress={handleEstadisticasPress}
                 />
             </View>
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     botonContainer:{
-        backgroundColor: 'rgb(118, 215, 196)',
+        backgroundColor: 'green',
         padding: 10,
         marginVertical: 50,
         marginHorizontal: 50,
