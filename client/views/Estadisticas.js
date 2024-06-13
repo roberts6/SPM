@@ -334,6 +334,9 @@ function Estadisticas({ jugador }) {
     const [porcentajePenal, setPorcentajePenal] = useState(0);
     const [porcentajePases, setPorcentajePases] = useState(0);
     const [recuperacion, setRecuperacion] = useState(0);
+    const [totalGoles, setTotalGoles] = useState(0);
+    const [totalGolPenal, setTotalGolPenal] = useState(0);
+    const [pasesCompletos, setPasesCompletos] = useState(0)
 
     useEffect(() => {
         const totalLanzamientos = accion.Nueve + accion.Seis + accion.NueveAfuera + accion.NueveArquero + accion.SeisAfuera + accion.SeisArquero; 
@@ -343,6 +346,13 @@ function Estadisticas({ jugador }) {
         setPenales(totalPenales);
 
         setRecuperacion(accion.recuperaciones);
+
+        setPasesCompletos(accion.pases)
+
+        const goles = accion.Nueve + accion.Seis;
+        setTotalGoles(goles)
+
+        setTotalGolPenal(accion.penal)
 
         const pases = accion.paseErrado + accion.pases
         setPasesTotales(pases)
@@ -458,24 +468,24 @@ if (key === 'roja' && nuevosValores.dosMinutos === 3 ) {
                 <View style={ styles.statRow }>
                     <Text style={[
                         accion.roja === 1 ? styles.statTextRoja : styles.statText]}>
-                        Lanzamientos: {lanzamientosTotales} - Gol: ({porcentajeLanzamientos}%)
+                        Lanzamientos: {lanzamientosTotales} - Gol: {totalGoles} ({porcentajeLanzamientos}%)
                     </Text>
                 </View>
                 <View style={ styles.statRow }>
                     <Text style={[
                         accion.roja === 1 ? styles.statTextRoja : styles.statText]}>
-                        Penales: {penales} - Gol: ({porcentajePenal}%)
+                        Penales: {penales} - Gol: {totalGolPenal} ({porcentajePenal}%)
                     </Text>
                 </View>
                 <View style={ styles.statRow }>
                     <Text style={[
                         accion.roja === 1 ? styles.statTextRoja : styles.statText]}>
-                        Pases: {pasesTotales} - Correctos: ({porcentajePases}%)
+                        Pases: {pasesTotales} - Correctos: {pasesCompletos} ({porcentajePases}%)
                     </Text>
                 </View>
                 <View style={{ display: accion.azul === 1 ? styles.statRow : 'none' }}>
                     <Text style={[
-                        accion.roja === 1 ? styles.statTextRoja : styles.statText]}>🟦 (informe)</Text>
+                        accion.roja === 1 ? styles.statTextRoja : styles.statText]}>🟦 <Text style={{ fontWeight: 'bold' }}>(informe)</Text></Text>
                 </View>
             </View>
                 
